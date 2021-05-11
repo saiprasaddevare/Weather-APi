@@ -13,12 +13,17 @@ class WeatherController < ApplicationController
       code: 201,
       body: weather
     }
-
   end
 
   def show
     weather_id = params['id']
     weather = Weather.find(weather_id)
+    if weather.nil?
+      weather = {
+        code: 400,
+        body: "No weather record found for this id #{weather_id}"
+      }
+    end
     render json: weather
   end
 
